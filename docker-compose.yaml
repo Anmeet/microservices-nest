@@ -1,29 +1,61 @@
+name: sleepr
 services:
   reservations:
+    container_name: reservations
     build:
       context: .
       dockerfile: ./apps/reservations/Dockerfile
       target: development
     command: pnpm run start:dev reservations
-    env_file:
-      - ./apps/reservations/.env
     ports:
       - '3000:3000'
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
+    networks:
+      - reservations_db
+      - auth_db
+    env_file:
+      - ./apps/reservations/.env
+
   auth:
+    container_name: auth
     build:
       context: .
       dockerfile: ./apps/auth/Dockerfile
       target: development
     command: pnpm run start:dev auth
-    env_file:
-      - ./apps/auth/.env
     ports:
       - '3001:3001'
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-  mongo:
-    image: mongo
+    networks:
+      - reservations_db
+      - auth_db
+    env_file:
+      - ./apps/auth/.env
+
+  mongo-db:
+    container_name: mongo-db
+    image: mongo # container image to be used
+    restart: 'no'
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGODB_DATABASE: sleepr
+    networks:
+      - reservations_db
+      - auth_db
+
+networks:
+  reservations_db:
+    name: reservations_db
+  auth_db:
+    name: auth_db
+
+volumes:
+  mongo-data:
+    name: 'mongo-data'
