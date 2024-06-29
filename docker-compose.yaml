@@ -36,6 +36,24 @@ services:
     env_file:
       - ./apps/auth/.env
 
+  payments:
+    container_name: payments
+    build:
+      context: .
+      dockerfile: ./apps/payments/Dockerfile
+      target: development
+    command: pnpm run start:dev payments
+    ports:
+      - '3004:3004'
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - reservations_db
+      - auth_db
+    env_file:
+      - ./apps/payments/.env
+
   mongo-db:
     container_name: mongo-db
     image: mongo # container image to be used

@@ -27,10 +27,12 @@
     }
   },
   "watchOptions": {
-
-  // Use dynamic polling instead of the system's native events for file changes.
-  "watchFile": "dynamicPriorityPolling",
-  "watchDirectory": "dynamicPriorityPolling",
-  "excludeDirectories": ["**/node_modules", "dist"]
-}
+    // Use dynamic polling instead of the system's native events for file changes.
+    "watchFile": "dynamicPriorityPolling",
+    "watchDirectory": "dynamicPriorityPolling",
+    "excludeDirectories": [
+      "**/node_modules",
+      "dist"
+    ]
+  }
 }
