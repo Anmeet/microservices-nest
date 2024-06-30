@@ -23,10 +23,7 @@ export class ReservationsController {
     @Body() createReservationDto: CreateReservationDto,
     @CurrentUser() user: UserDto,
   ) {
-    const _user = this.reservationsService.create(
-      createReservationDto,
-      user._id,
-    );
+    const _user = this.reservationsService.create(createReservationDto, user);
     console.log('user', user);
     return _user;
   }
