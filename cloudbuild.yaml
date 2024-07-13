@@ -56,3 +56,6 @@ steps:
       ]
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'australia-southeast1-docker.pkg.dev/sleepr-428000/payments/production']
+
+options:
+  logging: CLOUD_LOGGING_ONLY
