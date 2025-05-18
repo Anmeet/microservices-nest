@@ -1,4 +1,4 @@
-FROM node:alpine As development
+FROM node:23.11.1-alpine3.21 As development
 
 WORKDIR /usr/src/app
 
@@ -19,7 +19,7 @@ RUN cd apps/payments && pnpm install
 
 RUN pnpm run build payments
 
-FROM node:alpine as production
+FROM node:23.11.1-alpine3.21 as production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
